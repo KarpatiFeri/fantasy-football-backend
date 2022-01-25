@@ -1,4 +1,4 @@
-package com.fantasyfootball.model;
+package com.fantasyfootball.model.team;
 
 import java.util.Set;
 
@@ -24,9 +24,14 @@ public class Team {
 
     private String league;
 
+    private int position;
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @OneToMany(mappedBy = "team", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
     @Singular
     private Set<Player> players;
+
+    @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE})
+    private TeamStatistic teamStatistic;
 }
