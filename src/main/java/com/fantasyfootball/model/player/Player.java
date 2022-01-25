@@ -2,7 +2,7 @@ package com.fantasyfootball.model.player;
 
 import javax.persistence.*;
 
-import com.fantasyfootball.model.Team;
+import com.fantasyfootball.model.team.Team;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -55,7 +55,7 @@ public class Player {
     @ToString.Exclude
     private Team team;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE})
     private PlayerStatistic playerStatistic;
 
     public int getAge() {
