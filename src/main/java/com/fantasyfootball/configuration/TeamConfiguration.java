@@ -1,12 +1,13 @@
 package com.fantasyfootball.configuration;
 
 import com.fantasyfootball.dao.TeamRepository;
-import com.fantasyfootball.model.Team;
+import com.fantasyfootball.model.team.Team;
 
 import com.fantasyfootball.model.player.Nationality;
 import com.fantasyfootball.model.player.Player;
 import com.fantasyfootball.model.player.PlayerStatistic;
 import com.fantasyfootball.model.player.Position;
+import com.fantasyfootball.model.team.TeamStatistic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -36,34 +37,36 @@ public class TeamConfiguration {
     public CommandLineRunner initTeams() {
         return args -> {
             int teamSize = 20;
-            List<String> teams = Arrays.asList("Arsenal", "Tottenham", "Chelsea", "Liverpool", "Manchester United",
+            List<String> teams = Arrays.asList("Arsenal", "Chelsea", "Liverpool", "Manchester United",
                     "Manchester City", "Newcastle", "West Ham", "Leicester", "Aston Villa", "Wolves", "Brentford",
                     "Brighton", "Leeds", "Watford", "Crystal Palace", "Everton", "Burnley", "Southampton",
-                    "Norwich");
+                    "Norwich", "Tottenham");
 
-            for (String team : teams) {
+            for (int i = 0; i < teamSize; i++) {
                 List<Player> players = new ArrayList<>();
 
-                for (int i = 0; i < teamSize; i++) {
-                    Player bob = Player.builder()
+                for (int j = 0; j < teamSize; j++) {
+                    Player player = Player.builder()
                             .firstName(getRandomFirstName())
                             .lastName(getRandomLastName())
                             .birthDay(getRandomBirthday())
                             .playerStatistic(PlayerStatistic.builder().build())
-                            .position(getRandomPosition(i))
+                            .position(getRandomPosition(j))
                             .nationality(getRandomNationality())
                             .height(getRandomHeight())
                             .weight(getRandomWeight())
                             .foot(getRandomFoot())
                             .value(getRandomValue())
                             .build();
-                    players.add(bob);
+                    players.add(player);
                 }
 
                 Team premierLeagueTeam = Team.builder()
                         .league("Premier League")
-                        .name(team)
+                        .name(teams.get(i))
+                        .position(i + 1)
                         .players(players)
+                        .teamStatistic(TeamStatistic.builder().build())
                         .build();
 
                 for (Player player : players) {
