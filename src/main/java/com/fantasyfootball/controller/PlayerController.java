@@ -6,12 +6,11 @@ import com.fantasyfootball.model.player.Player;
 import com.fantasyfootball.service.PlayerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/fantasy-football")
+@CrossOrigin(origins = "http://localhost:3000")
 public class PlayerController {
 
     private final PlayerService playerService;
@@ -24,5 +23,10 @@ public class PlayerController {
     @GetMapping("/players")
     public List<Player> getAllPlayer() {
         return playerService.getPlayers();
+    }
+
+    @GetMapping("/players/{id}")
+    public List<Player> getPlayersByTeamId(@PathVariable Long id) {
+        return playerService.getPlayersByTeamId(id);
     }
 }
